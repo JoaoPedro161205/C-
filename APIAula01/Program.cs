@@ -17,6 +17,12 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.EnsureCreated();
+}
+
 // Em desenvolvimento, habilita a página do Swagger em /swagger
 if (app.Environment.IsDevelopment())
 {
